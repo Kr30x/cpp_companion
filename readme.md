@@ -1,6 +1,6 @@
 # cpp_companion
 
-## Установка
+## Установка Linus/OSX
 
 0) ```git clone https://github.com/Kr30x/cpp_companion.git ~/cpp_companion```
 
