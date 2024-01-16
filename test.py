@@ -13,14 +13,14 @@ EXISTING_TASKS = os.listdir(f'../{PATH}/tasks')
 
 
 def push(task_name):
-    print('Начиннаю процесс пуша задачи ', task_name + '...')
+    print('Начиннаю процесс пуша задачи ', task_name + '... \t OK')
     
-    print(f'Создаю ветку submits/{task_name}... \t')
+    print(f'Создаю ветку submits/{task_name}... \t\t\t OK')
     try:
         result = subprocess.run(f'cd ~/{PATH}; git checkout main', shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         result = subprocess.run(f'cd ~/{PATH}; git checkout -b submits/{task_name}', shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     except Exception as e:
-        print('Перехожу на ветку... \t\t')
+        print('Перехожу на ветку... \t\t\t\t\t', end=' ')
         try:
             result = subprocess.run(f'cd ~/{PATH}; git checkout main', shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             result = subprocess.run(f'cd ~/{PATH}; git checkout submits/{task_name}', shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -41,7 +41,7 @@ def push(task_name):
     if choice != 'y':
         return 
     
-    print('Staging files...', end=' ')
+    print('Staging files...  \t\t\t\t\t', end=' ')
     try:
         result = subprocess.run(f'cd ~/{PATH}; git add -A', shell=True, check=True, stdout=stdout, stderr=stderr, text=True)
         print('OK')
@@ -54,7 +54,8 @@ def push(task_name):
             result = subprocess.run(f'cd ~/{PATH}; git commit -m "Solution for task: {task_name}" ', shell=True, check=True, stdout=stdout, stderr=stderr, text=True)
             print('OK')
         except Exception as e:
-            print('Error:', e) 
+            print('Error:', e)
+            return 
     else:
         commit_message = input('Сообщение коммита: ')
         try: 
@@ -62,10 +63,11 @@ def push(task_name):
             print('OK')
         except Exception as e:
             print('Error: ', e)
+            return 
     
     print('Pushing commit...', end=' ')
     try: 
-        result = subprocess.run(f'cd ~/{PATH}; git checkout submits/{task_name}; git push', shell=True, check=True, stdout=stdout, stderr=stderr, text=True)
+        result = subprocess.run(f'cd ~/{PATH}; git checkout submits/{task_name}; git push', shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         print('OK')
     except Exception as e:
         print('Error:', e)
